@@ -10,7 +10,7 @@ mysql> desc EMPLOYEE;
 +----------+-------------+------+-----+---------+-------+
 | emp_id   | int         | YES  |     | NULL    |       |
 | Name     | varchar(10) | YES  |     | NULL    |       |
-| City     | varchar(10) | YES  |     | NULL    |       |
+| City     | varchar(10) | YES  |     | NULL    |       | 
 | Dob      | int         | YES  |     | NULL    |       |
 | adhar_no | bigint      | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
