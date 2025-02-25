@@ -1,4 +1,4 @@
-Create a table EMPLOYEE have the following fields (emp_id, name,city,dob,adhar_no)
+1. Create a table EMPLOYEE have the following fields (emp_id, name,city,dob,adhar_no)
 
 
 mysql> create table EMPLOYEE(emp_id int, Name varchar(10),City varchar(10), Dob int, adhar_no bigint);
@@ -86,3 +86,4 @@ mysql> desc STUDENT_DUPLI;
 
 
 //RESUBMIT, ADD QUESTIONS BEFORE QUERY
+//verified
