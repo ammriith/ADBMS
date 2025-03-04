@@ -144,18 +144,19 @@ mysql> desc invoice_master;
 3 rows in set (0.00 sec)
 
 
-mysql> create table invoice_item(inv_id int ,p_id int,quantity int not null, primary key(inv_id,p_id),foreign key(inv_id)references invoice_master(inv_id),foreign key(p_id)references product(p_id));
+mysql>  create table invoice_item(inv_id int ,p_id int,quantity int not null ,foreign key(inv_id)references invoice_master(inv_id),foreign key(p_id)references product(p_id));
 Query OK, 0 rows affected (0.02 sec)
 
 mysql> desc invoice_item;
 +----------+------+------+-----+---------+-------+
 | Field    | Type | Null | Key | Default | Extra |
 +----------+------+------+-----+---------+-------+
-| inv_id   | int  | NO   | PRI | NULL    |       |
-| p_id     | int  | NO   | PRI | NULL    |       |
+| inv_id   | int  | YES  | MUL | NULL    |       |
+| p_id     | int  | YES  | MUL | NULL    |       |
 | quantity | int  | NO   |     | NULL    |       |
 +----------+------+------+-----+---------+-------+
-3 rows in set (0.00 sec)
+3 rows in set (0.01 sec)
+
 
 
 
