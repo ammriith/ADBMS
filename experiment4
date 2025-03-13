@@ -1,0 +1,246 @@
+a) ACCESSING DATABASE:  (SELECT, Filtering using WHERE, ORDER BY Clauses)
+
+
+
+
+
+
+1.    List all invoice items, avoid duplicates.
+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | p_id | quantity |
++--------+------+----------+
+|    101 | 1001 |        4 |
+|    102 | 1002 |        3 |
+|    101 | 1004 |        2 |
+|    103 | 1005 |        1 |
+|    104 | 1003 |        5 |
+|    104 | 1004 |        4 |
+|    103 | 1002 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+
+mysql> select distinct inv_id from invoice_item;
++--------+
+| inv_id |
++--------+
+|    101 |
+|    102 |
+|    103 |
+|    104 |
++--------+
+4 rows in set (0.00 sec)
+
+
+2.    List the invoice details from 1st January 2024 to 31st march 2024
+
+
+
+mysql> SELECT * FROM invoice_master WHERE inv_date BETWEEN '2025-01-01' AND '2025-03-31';
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2025-02-12 |
+|    102 |   10002 | 2025-02-13 |
+|    103 |   10003 | 2025-02-17 |
+|    104 |   10004 | 2025-02-24 |
++--------+---------+------------+
+4 rows in set (0.00 sec)
+
+
+
+3.    List the customer details who not live in ‘tvm’.
+
+
+
+mysql> select * from customer where city <> 'TVM';
++-------+-------+------------+------+-----------+
+| id    | name  | address    | city | ph_no     |
++-------+-------+------------+------+-----------+
+|  2222 | eeee  | ooo        | ppp  |  98887654 |
+| 10001 | AKHIL | BEYPORE    | CLT  | 987654320 |
+| 10002 | AJU   | GURUVAYOOR | TSR  | 983354320 |
+| 10003 | ROHIT | EDAPALLY   | EKM  |      NULL |
++-------+-------+------------+------+-----------+
+4 rows in set (0.00 sec)
+
+
+
+4.    List the customers who have no phone number.
+
+
+mysql> select * from customer where ph_no is NULL;
++-------+-------+----------+------+-------+
+| id    | name  | address  | city | ph_no |
++-------+-------+----------+------+-------+
+| 10003 | ROHIT | EDAPALLY | EKM  |  NULL |
++-------+-------+----------+------+-------+
+1 row in set (0.00 sec)
+
+
+
+5.    Display customer names in descending order.
+
+
+mysql> select name from customer order by name desc;
++-------+
+| name  |
++-------+
+| ROHIT |
+| eeee  |mysql> select name, city from customer order by city asc ,name desc;
++-------+------+
+| name  | city |
++-------+------+
+| AKHIL | CLT  |
+| ROHIT | EKM  |
+| eeee  | ppp  |
+| AJU   | TSR  |
+| ASWIN | TVM  |
++-------+------+
+5 rows in set (0.00 sec)
+
+| ASWIN |
+| AKHIL |
+| AJU   |
++-------+
+5 rows in set (0.00 sec)
+
+
+
+6.    Display the customer details sorted in ascending by city and descending by names.
+
+
+mysql> select name, city from customer order by city asc ,name desc;
++-------+------+
+| name  | city |
++-------+------+
+| AKHIL | CLT  |
+| ROHIT | EKM  |
+| eeee  | ppp  |
+| AJU   | TSR  |
+| ASWIN | TVM  |
++-------+------+
+5 rows in set (0.00 sec)
+
+
+7.    Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length
+
+
+mysql> select distinct name from customer where(name like '%e%' or name like '%a%') and length(name )>=3;
++-------+
+| name  |
++-------+
+| eeee  |
+| AKHIL |
+| AJU   |
+| ASWIN |
++-------+
+4 rows in set (0.00 sec)
+
+
+
+8.    List the names of customers their names have ‘j’ in second position.
+
+
+mysql> select name from customer where name like '_J%';
++------+
+| name |
++------+
+| AJU  |
++------+
+1 row in set (0.00 sec)
+
+
+
+
+b) OPTIMIZING DATABASE:  (GROUP BY, AGGREGATE FUNCTIONS)
+
+
+1.    List product name, price except pencil on price order.
+
+
+mysql> select pname,price from product where pname <>'pencil' order by price;
++-----------+-------+
+| pname     | price |
++-----------+-------+
+| icecream  |    31 |
+| pen       |   122 |
+| hotwheels |   153 |
+| bag       |   408 |
++-----------+-------+
+4 rows in set (0.00 sec)
+
+
+2.    Find minimum, maximum and average price of products.
+
+
+mysql> select min(price) as min_price,max(price) as max_price,avg(price) as avg_price from product;
++-----------+-----------+-----------+
+| min_price | max_price | avg_price |
++-----------+-----------+-----------+
+|        31 |       408 |  151.0000 |
++-----------+-----------+-----------+
+1 row in set (0.00 sec)
+
+
+
+3.    Find number of customers in each city.
+
+
+mysql> select city,count(*) as num_name from customer group by city;
++------+----------+
+| city | num_name |
++------+----------+
+| ppp  |        1 |
+| CLT  |        1 |
+| TSR  |        1 |
+| EKM  |        1 |
+| TVM  |        1 |
++------+----------+
+5 rows in set (0.01 sec)
+
+
+4.    Find number of customers in each city, only include city with more than 3 customers.
+
+
+mysql> select city, count(*) as num_name from customer group by city having count(city)>3;
++------+----------+
+| city | num_name |
++------+----------+
+| TSR  |        4 |
++------+----------+
+1 row in set (0.00 sec)
+
+
+
+5. Show data as displayed ‘who, where’ Eg: ‘customer1 lives in ekm’
+
+
+mysql> select concat(name ,"lives in",city) as data from customer;
++-------------------+
+| data              |
++-------------------+
+| eeeelives inppp   |
+| AKHILlives inCLT  |
+| AJUlives inTSR    |
+| ROHITlives inEKM  |
+| ASWINlives inTVM  |
+| hahalives inTSR   |
+| ameenalives inTSR |
+| lintolives inTSR  |
++-------------------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
