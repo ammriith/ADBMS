@@ -5,7 +5,7 @@ a) ACCESSING DATABASE:  (SELECT, Filtering using WHERE, ORDER BY Clauses)
 
 
 
-1.    List all invoice items, avoid duplicates.
+1.    List all invoice items, avoid duplicates. 
 
 
 mysql> select * from invoice_item;
