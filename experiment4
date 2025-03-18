@@ -236,7 +236,7 @@ mysql> select concat(name ,"lives in",city) as data from customer;
 
 
 
-
+//VERIFIED
 
 
 
