@@ -126,5 +126,5 @@ mysql> select pname from product where p_id in(select p_id from invoice_item whe
 +-------+
 1 row in set (0.00 sec)
 
-
+//VERIFIED
 
