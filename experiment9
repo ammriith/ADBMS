@@ -34,3 +34,4 @@ mysql> select p_id,pname,price,price_range(price)
 +------+-----------+-------+--------------------+
 6 rows in set (0.00 sec)
 
+//VERIFIED
