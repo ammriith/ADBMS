@@ -1,0 +1,81 @@
+1.      Create a trigger to handle updates to the customer table.
+
+
+mysql> create table cust(id int,name varchar(15),address varchar(15),city varchar(10),ph_no int);
+    -> //
+Query OK, 0 rows affected (0.02 sec)
+
+
+mysql> delimiter //
+mysql> create trigger cust_trigger
+    -> after update on customer
+    -> for each row begin
+    -> insert into cust set id=new.id,name=new.name,address=new.address,city=new.city,ph_no=new.ph_no;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from customer; //
++-------+--------+------------+------+-----------+
+| id    | name   | address    | city | ph_no     |
++-------+--------+------------+------+-----------+
+|  2222 | eeee   | ooo        | ppp  |  98887654 |
+| 10001 | AKHIL  | BEYPORE    | CLT  | 987654320 |
+| 10002 | AJU    | GURUVAYOOR | TSR  | 983354320 |
+| 10003 | ROHIT  | EDAPALLY   | EKM  |      NULL |
+| 10004 | ASWIN  | PARASALA   | TVM  | 998765665 |
+| 10006 | haha   | che        | TSR  |  93354440 |
+| 10007 | ameena | kor        | TSR  | 933544660 |
+| 10008 | linto  | cha        | TSR  | 933544665 |
++-------+--------+------------+------+-----------+
+8 rows in set (0.00 sec)
+
+
+mysql> update customer set name='roshan' where id=10001; //
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from cust; //
++-------+--------+---------+------+-----------+
+| id    | name   | address | city | ph_no     |
++-------+--------+---------+------+-----------+
+| 10001 | roshan | BEYPORE | CLT  | 987654320 |
+| 10001 | roshan | BEYPORE | CLT  | 987654320 |
++-------+--------+---------+------+-----------+
+2 rows in set (0.00 sec)
+
+
+
+2.      Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10).
+
+
+
+mysql> delimiter //
+mysql> create trigger  new_p
+    -> before insert on product for each row begin
+    -> if new.price<5 then set new.price=10;
+    -> end if;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into product values(205,'eraser',4);
+    -> //
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product;
+    -> //
++------+-----------+-------+
+| p_id | pname     | price |
++------+-----------+-------+
+|  205 | eraser    |    10 |
+| 1001 | pen       |   122 |
+| 1002 | bag       |   408 |
+| 1003 | pencil    |    41 |
+| 1004 | hotwheels |   153 |
+| 1005 | icecream  |    31 |
+| 1006 | bike      |    60 |
++------+-----------+-------+
+7 rows in set (0.00 sec)
+
+
