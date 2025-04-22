@@ -96,4 +96,4 @@ invoice> db.customer.aggregate([ { $match: { name: {$regex: /^s/ } } } ])
   { customerName: 'dony' }
 ]
 
-
+//VERIFIED
