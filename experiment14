@@ -1,0 +1,99 @@
+1.      Write a MongoDB query to sort customer details in ascending order of their name.
+
+
+
+invoice> db.customer.find().sort({name: 1});
+[
+  {
+    _id: ObjectId('67ff6fa8a42596187d544caa'),
+    id: 4,
+    name: 'Abu',
+    email: 'abu7123@gmail.com',
+    phone: '764083254',
+    city: 'ekm'
+  },
+  {
+    _id: ObjectId('67ff6fa8a42596187d544cab'),
+    id: 5,
+    name: 'dony',
+    email: 'dony5123@gmail.com',
+    phone: '764083454',
+    city: 'tsr'
+  },
+  {
+    _id: ObjectId('67ff6fa8a42596187d544ca7'),
+    id: 1,
+    name: 'john',
+    email: 'john123@gmail.com',
+    phone: '99087654',
+    city: 'calicut'
+  },
+  {
+    _id: ObjectId('67ff6fa8a42596187d544ca8'),
+    id: 2,
+    name: 'samuel',
+    email: 'samuel123@gmail.com',
+    phone: '99087334',
+    city: 'Tvm'
+  }
+]
+
+
+
+2.      Write a MongoDB query to count number of customers in each city.
+
+
+invoice> db.customer.aggregate([{$group:{_id:"$city",customerCount:{$sum: 1}}}]) 
+[
+  { _id: 'Tvm', customerCount: 1 },
+  { _id: 'ekm', customerCount: 1 },
+  { _id: 'calicut', customerCount: 1 },
+  { _id: 'tsr', customerCount: 1 }
+]
+
+
+
+3.      Write a MongoDB query to find minimum and maximum age in each city.
+
+
+invoice> db.customer.aggregate([ { $group:{ _id: "$city", max_age: { $max: "$age" }, min_age: { $min: "$age" } } }] )
+[
+  { _id: 'calicut', max_age: 25, min_age: 25 },
+  { _id: 'ekm', max_age: 22, min_age: 22 },
+  { _id: 'tsr', max_age: 30, min_age: 30 },
+  { _id: 'Tvm', max_age: 28, min_age: 28 }
+]
+
+
+
+4.      Write a MongoDB query using the $match stage to retrieve all customer documents whose customer_name starts with the letter “S”.
+
+
+invoice> db.customer.aggregate([ { $match: { name: {$regex: /^s/ } } } ])
+[
+  {
+    _id: ObjectId('67ff6fa8a42596187d544ca8'),
+    id: 2,
+    name: 'samuel',
+    email: 'samuel123@gmail.com',
+    phone: '99087334',
+    city: 'Tvm',
+    age: 28
+  }
+]
+
+
+
+
+5.      Write a query using $lookup to join CUSTOMER and PRODUCT collections and display only customer name, product name, and price.
+
+
+ db.customer.aggregate([{$lookup:{from:"product", localField:"id", foreignField:"p_id", as:"product_details"}}, {$project: {_id:0, customerName: "$name", productName: {$arrayElemAt:["$product_details.name", 0]}, price: {$arrayElemAt: ["$product_details.price", 0]}}}])
+[
+  { customerName: 'john', productName: 'munch', price: 20 },
+  { customerName: 'samuel', productName: 'dark fantasy', price: 30 },
+  { customerName: 'Abu' },
+  { customerName: 'dony' }
+]
+
+
