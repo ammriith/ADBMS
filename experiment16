@@ -14,7 +14,7 @@ sudo rm /tmp/mongodb-27017.sock
 rm ./nod1/mongod.lock
   ---end of fix -----
   
-(base) ksb@ksb-07:~/Documents/yaseen/mongo$ mongosh --port 27019
+(base) ksb@ksb-07:~/Documents/amrith/mongo$ mongosh --port 27019
 Current Mongosh Log ID:	680769232e1cb1d26cd861df
 Connecting to:		mongodb://127.0.0.1:27019/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.0
 Using MongoDB:		8.0.8
@@ -180,9 +180,9 @@ rs0 [direct: primary] db1> db.customer.find()
 [
   {
     _id: ObjectId('680768c5b702942e16d861e0'),
-    name: 'aj',
-    city: 'ekm',
-    age: 30
+    name: 'appu',
+    city: 'tsr',
+    age: 28
   }
 ]
 
@@ -196,9 +196,9 @@ rs0 [direct: secondary] db1> db.customer.find()
 [
   {
     _id: ObjectId('680768c5b702942e16d861e0'),
-    name: 'aj',
-    city: 'ekm',
-    age: 30
+    name: 'appu',
+    city: 'tsr',
+    age: 28
   }
 ]
 
@@ -210,9 +210,9 @@ rs0 [direct: secondary] db1> db.customer.find()
 [
   {
     _id: ObjectId('680768c5b702942e16d861e0'),
-    name: 'aj',
-    city: 'ekm',
-    age: 30
+    name: 'appu',
+    city: 'tsr',
+    age: 28
   }
 ]
 rs0 [direct: secondary] db1> 
